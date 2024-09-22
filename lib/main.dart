@@ -1,10 +1,14 @@
-import 'package:flutter/foundation.dart';
+import 'package:basketball_counter_app/core/cache_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // عشان اتاكد ان كلو جاهز للرن
+  await CacheHelper().init(); // دي بتاخد نسخه من الشيرد
   runApp(const PointsCounter());
 }
+
+// CacheHelper() علشان استعملتها كذا مره فهستعمل سنجلتون ديزاين باترن
+// باخد اوبجكت فمكان معين وبخزنو وببدا استخده علي مستوي الااب كلو
 
 class PointsCounter extends StatefulWidget {
   const PointsCounter({super.key});
@@ -14,26 +18,9 @@ class PointsCounter extends StatefulWidget {
 }
 
 class _PointsCounterState extends State<PointsCounter> {
-  int teamAPoints = 0;
-  int teamBPoints = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    SharedPreferences.getInstance().then((sp) {
-      setState(() {
-        teamAPoints = sp.getInt('teamAPoints') ?? 0;
-        teamBPoints = sp.getInt('teamBPoints') ?? 0;
-      });
-    });
-  }
-
-  void addOnePoint() {
-    if (kDebugMode) {
-      // علشان لو نسيت
-      print('add one point');
-    }
-  }
+  // بشيك لو موجود الكيي دا واضيفو لو مش موجود ب0
+  int teamAPoints = CacheHelper().getData(key: 'teamAPoints') ?? 0;
+  int teamBPoints = CacheHelper().getData(key: 'teamBPoints') ?? 0;
 
   @override
   Widget build(BuildContext context) {
@@ -73,17 +60,11 @@ class _PointsCounterState extends State<PointsCounter> {
                           backgroundColor: Colors.orange,
                           minimumSize: const Size(150, 50),
                         ),
-                        onPressed: () {
-                          SharedPreferences.getInstance().then((sp) {
-                            sp.setInt('teamAPoints', teamAPoints + 1);
-                          });
+                        onPressed: () async {
+                          await CacheHelper().saveData(
+                              key: 'teamAPoints', value: teamAPoints += 1);
                           setState(
-                            () {
-                              teamAPoints += 1;
-                              if (kDebugMode) {
-                                print(teamAPoints);
-                              }
-                            },
+                            () {},
                           );
                         },
                         child: const Text(
@@ -99,13 +80,12 @@ class _PointsCounterState extends State<PointsCounter> {
                           backgroundColor: Colors.orange,
                           minimumSize: const Size(150, 50),
                         ),
-                        onPressed: () {
-                          SharedPreferences.getInstance().then((sp) {
-                            sp.setInt('teamAPoints', teamAPoints + 2);
-                          });
-                          setState(() {
-                            teamAPoints += 2;
-                          });
+                        onPressed: () async {
+                          await CacheHelper().saveData(
+                              key: 'teamAPoints', value: teamAPoints += 2);
+                          setState(
+                            () {},
+                          );
                         },
                         child: const Text(
                           'Add 2 Point',
@@ -120,13 +100,12 @@ class _PointsCounterState extends State<PointsCounter> {
                           backgroundColor: Colors.orange,
                           minimumSize: const Size(150, 50),
                         ),
-                        onPressed: () {
-                          SharedPreferences.getInstance().then((sp) {
-                            sp.setInt('teamAPoints', teamAPoints + 3);
-                          });
-                          setState(() {
-                            teamAPoints += 3;
-                          });
+                        onPressed: () async {
+                          await CacheHelper().saveData(
+                              key: 'teamAPoints', value: teamAPoints += 3);
+                          setState(
+                            () {},
+                          );
                         },
                         child: const Text(
                           'Add 3 Point ',
@@ -171,13 +150,12 @@ class _PointsCounterState extends State<PointsCounter> {
                           backgroundColor: Colors.orange,
                           minimumSize: const Size(150, 50),
                         ),
-                        onPressed: () {
-                          SharedPreferences.getInstance().then((sp) {
-                            sp.setInt('teamBPoints', teamBPoints + 1);
-                          });
-                          setState(() {
-                            teamBPoints += 1; // تم التصحيح هنا
-                          });
+                        onPressed: () async {
+                          await CacheHelper().saveData(
+                              key: 'teamBPoints', value: teamBPoints += 1);
+                          setState(
+                            () {},
+                          );
                         },
                         child: const Text(
                           'Add 1 Point ',
@@ -192,13 +170,12 @@ class _PointsCounterState extends State<PointsCounter> {
                           backgroundColor: Colors.orange,
                           minimumSize: const Size(150, 50),
                         ),
-                        onPressed: () {
-                          SharedPreferences.getInstance().then((sp) {
-                            sp.setInt('teamBPoints', teamBPoints + 2);
-                          });
-                          setState(() {
-                            teamBPoints += 2;
-                          });
+                        onPressed: () async {
+                          await CacheHelper().saveData(
+                              key: 'teamBPoints', value: teamBPoints += 2);
+                          setState(
+                            () {},
+                          );
                         },
                         child: const Text(
                           'Add 2 Point ',
@@ -213,13 +190,12 @@ class _PointsCounterState extends State<PointsCounter> {
                           backgroundColor: Colors.orange,
                           minimumSize: const Size(150, 50),
                         ),
-                        onPressed: () {
-                          SharedPreferences.getInstance().then((sp) {
-                            sp.setInt('teamBPoints', teamBPoints + 3);
-                          });
-                          setState(() {
-                            teamBPoints += 3;
-                          });
+                        onPressed: () async {
+                          await CacheHelper().saveData(
+                              key: 'teamBPoints', value: teamBPoints += 3);
+                          setState(
+                            () {},
+                          );
                         },
                         child: const Text(
                           'Add 3 Point ',
@@ -246,17 +222,26 @@ class _PointsCounterState extends State<PointsCounter> {
               //     teamBPoints = 0;
               //   });
               // },
-              onPressed: () {
-                SharedPreferences.getInstance().then((sp) {
-                  sp.setInt('teamAPoints', teamAPoints + 0);
-                });
-                SharedPreferences.getInstance().then((sp) {
-                  sp.setInt('teamBPoints', teamBPoints = 0);
-                });
-                setState(() {
-                  teamAPoints = 0;
-                  teamBPoints = 0;
-                });
+              // onPressed: () {
+              //   SharedPreferences.getInstance().then((sp) {
+              //     sp.setInt('teamAPoints', teamAPoints + 0);
+              //   });
+              //   SharedPreferences.getInstance().then((sp) {
+              //     sp.setInt('teamBPoints', teamBPoints = 0);
+              //   });
+              //   setState(() {
+              //     teamAPoints = 0;
+              //     teamBPoints = 0;
+              //   });
+              // },
+              onPressed: () async {
+                await CacheHelper()
+                    .saveData(key: 'teamAPoints', value: teamAPoints = 0);
+                await CacheHelper()
+                    .saveData(key: 'teamBPoints', value: teamBPoints = 0);
+                setState(
+                  () {},
+                );
               },
               child: const Text(
                 'Reset',
