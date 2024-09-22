@@ -1,13 +1,18 @@
 import 'package:basketball_counter_app/core/cache_helper.dart';
+import 'package:basketball_counter_app/core/service_locator.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // عشان اتاكد ان كلو جاهز للرن
-  await CacheHelper().init(); // دي بتاخد نسخه من الشيرد
+
+  setupServiceLocator();
+  // بنادي علي جيت ات وبقولو عندك اوبجكت هناك اسمه كاشهلبر هاتو
+  await getIt<CacheHelper>().init(); // دي بتاخد نسخه من الشيرد
+
   runApp(const PointsCounter());
 }
 
-// CacheHelper() علشان استعملتها كذا مره فهستعمل سنجلتون ديزاين باترن
+// CacheHelper> علشان استعملتها كذا مره فهستعمل سنجلتون ديزاين باترن
 // باخد اوبجكت فمكان معين وبخزنو وببدا استخده علي مستوي الااب كلو
 
 class PointsCounter extends StatefulWidget {
@@ -19,8 +24,8 @@ class PointsCounter extends StatefulWidget {
 
 class _PointsCounterState extends State<PointsCounter> {
   // بشيك لو موجود الكيي دا واضيفو لو مش موجود ب0
-  int teamAPoints = CacheHelper().getData(key: 'teamAPoints') ?? 0;
-  int teamBPoints = CacheHelper().getData(key: 'teamBPoints') ?? 0;
+  int teamAPoints = getIt<CacheHelper>().getData(key: 'teamAPoints') ?? 0;
+  int teamBPoints = getIt<CacheHelper>().getData(key: 'teamBPoints') ?? 0;
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +66,7 @@ class _PointsCounterState extends State<PointsCounter> {
                           minimumSize: const Size(150, 50),
                         ),
                         onPressed: () async {
-                          await CacheHelper().saveData(
+                          await getIt<CacheHelper>().saveData(
                               key: 'teamAPoints', value: teamAPoints += 1);
                           setState(
                             () {},
@@ -81,7 +86,7 @@ class _PointsCounterState extends State<PointsCounter> {
                           minimumSize: const Size(150, 50),
                         ),
                         onPressed: () async {
-                          await CacheHelper().saveData(
+                          await getIt<CacheHelper>().saveData(
                               key: 'teamAPoints', value: teamAPoints += 2);
                           setState(
                             () {},
@@ -101,7 +106,7 @@ class _PointsCounterState extends State<PointsCounter> {
                           minimumSize: const Size(150, 50),
                         ),
                         onPressed: () async {
-                          await CacheHelper().saveData(
+                          await getIt<CacheHelper>().saveData(
                               key: 'teamAPoints', value: teamAPoints += 3);
                           setState(
                             () {},
@@ -151,7 +156,7 @@ class _PointsCounterState extends State<PointsCounter> {
                           minimumSize: const Size(150, 50),
                         ),
                         onPressed: () async {
-                          await CacheHelper().saveData(
+                          await getIt<CacheHelper>().saveData(
                               key: 'teamBPoints', value: teamBPoints += 1);
                           setState(
                             () {},
@@ -171,7 +176,7 @@ class _PointsCounterState extends State<PointsCounter> {
                           minimumSize: const Size(150, 50),
                         ),
                         onPressed: () async {
-                          await CacheHelper().saveData(
+                          await getIt<CacheHelper>().saveData(
                               key: 'teamBPoints', value: teamBPoints += 2);
                           setState(
                             () {},
@@ -191,7 +196,7 @@ class _PointsCounterState extends State<PointsCounter> {
                           minimumSize: const Size(150, 50),
                         ),
                         onPressed: () async {
-                          await CacheHelper().saveData(
+                          await getIt<CacheHelper>().saveData(
                               key: 'teamBPoints', value: teamBPoints += 3);
                           setState(
                             () {},
@@ -235,9 +240,9 @@ class _PointsCounterState extends State<PointsCounter> {
               //   });
               // },
               onPressed: () async {
-                await CacheHelper()
+                await getIt<CacheHelper>()
                     .saveData(key: 'teamAPoints', value: teamAPoints = 0);
-                await CacheHelper()
+                await getIt<CacheHelper>()
                     .saveData(key: 'teamBPoints', value: teamBPoints = 0);
                 setState(
                   () {},
