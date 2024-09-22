@@ -1,6 +1,7 @@
 # basketball_counter_app
 
 A new Flutter project.
+![App Screenshot](./screenshots/app_screenshot.png)
 
 ## Getting Started
 
