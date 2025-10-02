@@ -12,22 +12,16 @@ It now demonstrates **state management, clean UI, responsive design, and dark/li
 
 ---
 
-## 📸 App Before Upgrade
+## 🎥 Demo Video
 
-![App Screenshot](./screenshots/app_screenshot.png)  
+- [Watch Demo Video](<video src="./screenshots/ScoreBall_video.mp4" width="600" controls></video>
+)
 
----
+- [Watch Demo on Google Drive](https://drive.google.com/file/d/12WdHL9JuCxpcXa6_k5L9bjL-J0rRHEA-/view?usp=drive_link)
 
-## ⚡ Features  
-
-- 🌓 Dark & Light themes with custom colors  
-- 📱 Responsive UI for different screen sizes  
-- 🎨 Modern Material 3 design  
-- 🔁 Reusable widgets (PointsButton, AnimatedPointsText, TeamColumn)  
-- 🎮 Interactive scoreboard with fouls & points system  
-- ⚡ Optimized for performance  
 
 ---
+
 
 ## 📷 Screenshots  
 
@@ -50,16 +44,27 @@ It now demonstrates **state management, clean UI, responsive design, and dark/li
 
 ---
 
+## ⚡ Features  
+
+- 🌓 Dark & Light themes with custom colors  
+- 📱 Responsive UI for different screen sizes  
+- 🎨 Modern Material 3 design  
+- 🔁 Reusable widgets (PointsButton, AnimatedPointsText, TeamColumn)  
+- 🎮 Interactive scoreboard with fouls & points system  
+- ⚡ Optimized for performance  
+
+---
+
 ## 📂 Project Structure  
 
-lib/ 
- # Main Flutter code
-  ui/widgets/ 
-   # Reusable widgets (buttons, animations, etc.)
-core/ 
-   # Theme & config
-screenshots/ 
- # App screenshots for README
+ # lib/ 
+   Main Flutter code
+   # ui/widgets/ 
+     Reusable widgets (buttons, animations, etc.)
+ # core/ 
+     Theme & config
+ # screenshots/ 
+   App screenshots for README
 
  ---
 
@@ -69,8 +74,8 @@ screenshots/
 
 1. **Clone the repository**  
 ```bash
-   git clone https://github.com/your-username/real-estate-ui.git
-   cd real-estate-ui
+   git clone https://github.com/Mo7amed-fawzy/ScoreBall-app.git
+   cd ScoreBall-app
 ```
 
 2. **Install dependencies**  
