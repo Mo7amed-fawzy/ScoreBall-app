@@ -14,8 +14,8 @@ It now demonstrates **state management, clean UI, responsive design, and dark/li
 
 ## 🎥 Demo Video
 
-- [Watch Demo Video](<video src="./screenshots/ScoreBall_video.mp4" width="600" controls></video>
-)
+- [Watch Demo on Google Drive](https://drive.google.com/file/d/12WdHL9JuCxpcXa6_k5L9bjL-J0rRHEA-/view?usp=drive_link)  
+
 
 - [Watch Demo on Google Drive](https://drive.google.com/file/d/12WdHL9JuCxpcXa6_k5L9bjL-J0rRHEA-/view?usp=drive_link)
 
