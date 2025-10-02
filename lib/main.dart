@@ -1,20 +1,18 @@
 import 'package:basketball_counter_app/core/cache_helper.dart';
 import 'package:basketball_counter_app/core/service_locator.dart';
+import 'package:basketball_counter_app/core/theme.dart';
+import 'package:basketball_counter_app/ui/bottom_nav_home_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); // عشان اتاكد ان كلو جاهز للرن
-
+  WidgetsFlutterBinding.ensureInitialized();
   setupServiceLocator();
-  // بنادي علي جيت ات وبقولو عندك اوبجكت هناك اسمه كاشهلبر هاتو
-  await getIt<CacheHelper>().init(); // دي بتاخد نسخه من الشيرد
+  await getIt<CacheHelper>().init();
 
   runApp(const PointsCounter());
 }
 
-// CacheHelper> علشان استعملتها كذا مره فهستعمل سنجلتون ديزاين باترن
-// باخد اوبجكت فمكان معين وبخزنو وببدا استخده علي مستوي الااب كلو
-
+/// Root App - يدير الثيم والتنقّل بين الشاشتين
 class PointsCounter extends StatefulWidget {
   const PointsCounter({super.key});
 
@@ -23,241 +21,28 @@ class PointsCounter extends StatefulWidget {
 }
 
 class _PointsCounterState extends State<PointsCounter> {
-  // بشيك لو موجود الكيي دا واضيفو لو مش موجود ب0
-  int teamAPoints = getIt<CacheHelper>().getData(key: 'teamAPoints') ?? 0;
-  int teamBPoints = getIt<CacheHelper>().getData(key: 'teamBPoints') ?? 0;
+  bool isDark = false;
+  int currentIndex = 0;
+
+  void toggleTheme() => setState(() => isDark = !isDark);
+  void openScoreBoardTab() => setState(() => currentIndex = 1);
+  void openPointsTab() => setState(() => currentIndex = 0);
+  void setIndex(int idx) => setState(() => currentIndex = idx);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Basketball Tools',
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.orange,
-          title: const Text('Points Counter'),
-        ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                SizedBox(
-                  height: 500,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      const Text(
-                        'Team A',
-                        style: TextStyle(
-                          fontSize: 32,
-                        ),
-                      ),
-                      Text(
-                        '$teamAPoints',
-                        style: const TextStyle(
-                          fontSize: 150,
-                        ),
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.all(8),
-                          backgroundColor: Colors.orange,
-                          minimumSize: const Size(150, 50),
-                        ),
-                        onPressed: () async {
-                          await getIt<CacheHelper>().saveData(
-                              key: 'teamAPoints', value: teamAPoints += 1);
-                          setState(
-                            () {},
-                          );
-                        },
-                        child: const Text(
-                          'Add 1 Point ',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.orange,
-                          minimumSize: const Size(150, 50),
-                        ),
-                        onPressed: () async {
-                          await getIt<CacheHelper>().saveData(
-                              key: 'teamAPoints', value: teamAPoints += 2);
-                          setState(
-                            () {},
-                          );
-                        },
-                        child: const Text(
-                          'Add 2 Point',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.orange,
-                          minimumSize: const Size(150, 50),
-                        ),
-                        onPressed: () async {
-                          await getIt<CacheHelper>().saveData(
-                              key: 'teamAPoints', value: teamAPoints += 3);
-                          setState(
-                            () {},
-                          );
-                        },
-                        child: const Text(
-                          'Add 3 Point ',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 500,
-                  child: VerticalDivider(
-                    indent: 50,
-                    endIndent: 50,
-                    color: Colors.grey,
-                    thickness: 1,
-                  ),
-                ),
-                SizedBox(
-                  height: 500,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      const Text(
-                        'Team B',
-                        style: TextStyle(
-                          fontSize: 32,
-                        ),
-                      ),
-                      Text(
-                        '$teamBPoints',
-                        style: const TextStyle(
-                          fontSize: 150,
-                        ),
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.all(8),
-                          backgroundColor: Colors.orange,
-                          minimumSize: const Size(150, 50),
-                        ),
-                        onPressed: () async {
-                          await getIt<CacheHelper>().saveData(
-                              key: 'teamBPoints', value: teamBPoints += 1);
-                          setState(
-                            () {},
-                          );
-                        },
-                        child: const Text(
-                          'Add 1 Point ',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.orange,
-                          minimumSize: const Size(150, 50),
-                        ),
-                        onPressed: () async {
-                          await getIt<CacheHelper>().saveData(
-                              key: 'teamBPoints', value: teamBPoints += 2);
-                          setState(
-                            () {},
-                          );
-                        },
-                        child: const Text(
-                          'Add 2 Point ',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.orange,
-                          minimumSize: const Size(150, 50),
-                        ),
-                        onPressed: () async {
-                          await getIt<CacheHelper>().saveData(
-                              key: 'teamBPoints', value: teamBPoints += 3);
-                          setState(
-                            () {},
-                          );
-                        },
-                        child: const Text(
-                          'Add 3 Point ',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.all(8),
-                backgroundColor: Colors.orange,
-                minimumSize: const Size(150, 50),
-              ),
-              // onPressed: () {
-              //   setState(() {
-              //     teamAPoints = 0;
-              //     teamBPoints = 0;
-              //   });
-              // },
-              // onPressed: () {
-              //   SharedPreferences.getInstance().then((sp) {
-              //     sp.setInt('teamAPoints', teamAPoints + 0);
-              //   });
-              //   SharedPreferences.getInstance().then((sp) {
-              //     sp.setInt('teamBPoints', teamBPoints = 0);
-              //   });
-              //   setState(() {
-              //     teamAPoints = 0;
-              //     teamBPoints = 0;
-              //   });
-              // },
-              onPressed: () async {
-                await getIt<CacheHelper>()
-                    .saveData(key: 'teamAPoints', value: teamAPoints = 0);
-                await getIt<CacheHelper>()
-                    .saveData(key: 'teamBPoints', value: teamBPoints = 0);
-                setState(
-                  () {},
-                );
-              },
-              child: const Text(
-                'Reset',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-          ],
-        ),
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
+      home: BottomNavHomeScreen(
+        isDark: isDark,
+        toggleTheme: toggleTheme,
+        currentIndex: currentIndex,
+        setIndex: setIndex,
+        openScoreBoardTab: openScoreBoardTab,
       ),
     );
   }

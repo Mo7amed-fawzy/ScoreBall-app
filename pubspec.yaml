@@ -30,11 +30,15 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter:
     sdk: flutter
+  flutter_bloc: ^8.1.6
   get_it: ^8.0.0
+  screenshot: ^3.0.0
+  share_plus: 11.1.0
   shared_preferences: ^2.3.2
 
 dev_dependencies:
   flutter_lints: ^4.0.0
+  gradle_doctor: ^0.0.2
   flutter_test:
     sdk: flutter
 

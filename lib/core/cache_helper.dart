@@ -42,7 +42,7 @@ class CacheHelper {
   }
 
 // بتروح علكاش وتشوف الكيي موجود ولا لا بتروو وفولس
-  bool covariansData({required String key}) {
+  bool containsData({required String key}) {
     return sharedPreferences.containsKey(key);
   }
 }
